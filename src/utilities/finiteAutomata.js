@@ -513,6 +513,74 @@ export const FiniteAutomata = class {
     return chaindedStates;
   }
 
+  toMiniNFA() {
+    const miniNfa = new this.constructor();
+    const cleanAlphabets = this.alphabets.filter((a) => a !== "λ");
+    miniNfa.alphabets = [...cleanAlphabets];
+
+    const lambdaClosures = [];
+    for (let i = 0; i < this.states.length; i++) {
+      lambdaClosures.push(this.#getChainLambda(i));
+    }
+
+    const reachable = new Set([0]);
+    const queue = [0];
+    const newTransitions = new Map();
+
+    while (queue.length > 0) {
+      const curr = queue.shift();
+      const currLambda = lambdaClosures[curr] || [curr];
+
+      for (const alpha of cleanAlphabets) {
+        const targets = this.#getChainTransition(currLambda, alpha);
+        for (const target of targets) {
+          if (!newTransitions.has(curr)) {
+            newTransitions.set(curr, []);
+          }
+          const existing = newTransitions.get(curr);
+          if (!existing.some((t) => t.value === alpha && t.to === target)) {
+            existing.push({ value: alpha, to: target });
+          }
+
+          if (!reachable.has(target)) {
+            reachable.add(target);
+            queue.push(target);
+          }
+        }
+      }
+    }
+
+    const sortedReachable = Array.from(reachable).sort((a, b) => a - b);
+    const stateMap = new Map();
+    sortedReachable.forEach((origState, newIndex) => {
+      stateMap.set(origState, newIndex);
+    });
+
+    miniNfa.addStates(sortedReachable.length);
+
+    miniNfa.finalStates = [];
+    for (const origState of sortedReachable) {
+      const closure = lambdaClosures[origState] || [origState];
+      const isFinal = closure.some((s) => this.finalStates.includes(s));
+      if (isFinal) {
+        miniNfa.finalStates.push(stateMap.get(origState));
+      }
+    }
+
+    for (const origState of sortedReachable) {
+      const transitions = newTransitions.get(origState) || [];
+      const newFrom = stateMap.get(origState);
+      for (const t of transitions) {
+        if (stateMap.has(t.to)) {
+          miniNfa.addTransition(t.value, newFrom, stateMap.get(t.to));
+        }
+      }
+    }
+
+    miniNfa.type = "nfa";
+    return miniNfa;
+  }
+
   toMiniDFA() {
     const dfa = this.toDFA();
 

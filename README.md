@@ -1,92 +1,90 @@
-# Regex2FA - Regular Expression to Finite Automata Converter
-![wired-outline-742-multimedia-code-1 (2)](https://github.com/AmirHossein812002/Regex2FA/assets/98973037/6893e34a-bf35-410b-8868-e5c0fc1de1b4)
+# RegeX — Interactive Finite Automata & Step Simulator
 
-Welcome to Regex2FA, your one-stop tool for converting regular expressions into various forms of finite automata! Whether you're a computer science enthusiast, a student studying formal languages, or just someone curious about the magic behind regular expressions and automata, Regex2FA has got you covered.
+Welcome to **RegeX**, an interactive educational studio for formal language theory, regular expressions, and finite state automata!
 
-[![Website](https://img.shields.io/badge/Check%20It%20Out-Regex2FA-blueviolet)](https://regex2fa.netlify.app/)
-[![License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#features)
-- [How to Use](#how-to-use)
-- [Examples](#examples)
-- [Language Equivalence](#language-equivalence)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Introduction
-
-Regex2FA is a web-based tool designed to demystify the transition from regular expressions to finite automata. It's not just another regex tester – it's your guide to understanding the conversion process while having fun along the way.
-
-Are you tired of drawing countless automata diagrams by hand? Fret not! Regex2FA provides you with three key automata representations for every regular expression you input: 
-
-1. **NFA (Nondeterministic Finite Automaton):** Explore the states, transitions, and the magical non-determinism that lies within regular expressions.
-
-2. **DFA (Deterministic Finite Automaton):** Watch as the non-determinism is tamed into a deterministic machine, ready to accept or reject strings in a clear-cut manner.
-
-3. **Minimized DFA:** Experience the elegance of the smallest possible DFA that still captures the essence of your regular expression's language.
-
-## Features
-
-- **Convert on the Fly:** Enter your regular expression in one of the input boxes, and Regex2FA generates the corresponding NFA, DFA, and minimized DFA for your exploration.
-
-- **Visualize Automata:** Gain insights into the inner workings of automata through clean and interactive visualizations.
-
-- **Language Equivalence Checker:** Wondering if two regular expressions describe the same language? Regex2FA can verify that for you!
-
-- **User-Friendly Interface:** No more wrestling with complex software. Regex2FA's intuitive interface makes understanding automata a breeze.
-
-## How to Use
-
-1. **Access the Website:** Go to [https://regex2fa.netlify.app/](https://regex2fa.netlify.app/).
-
-2. **Input Regular Expressions:** Enter your regular expressions in the input boxes provided on the webpage.
-
-3. **View Automata:** Once you've entered your regular expressions, marvel at the NFA, DFA, and minimized DFA representations that Regex2FA generates.
-
-4. **Compare Languages:** Curious if two regular expressions are equivalent in terms of the languages they describe? Use the language equivalence checker to find out.
-
-## Examples
-
-Let's dive into a couple of examples to showcase the magic of Regex2FA:
-
-### Example: Simple Language
-
-**Input:**
-```
-(a+b)*abb
-```
-
-**Output:**
-- NFA Visualization
-  
-![image](https://github.com/AmirHossein812002/Regex2FA/assets/98973037/ab46ffae-12ca-49c6-a766-869578ffa212)
-
-- DFA Visualization
-
-![image](https://github.com/AmirHossein812002/Regex2FA/assets/98973037/7721082d-5623-4a48-a180-61ea5e014d5d)
-
-- Minimized DFA Visualization
-
-![image](https://github.com/AmirHossein812002/Regex2FA/assets/98973037/9edfa3c7-c1ba-4e8d-b4a0-9d161505e3ec)
-
-## Language Equivalence
-
-Curious if two regular expressions are equivalent in terms of the languages they describe? Regex2FA can assist you in verifying this! Simply enter the two regular expressions and let the tool determine if they are describing the same language. For example:
-```
-(a+b)* == (a*b*)*
-```
-
-## Contributing
-
-Regex2FA is an open-source project, and we welcome contributions from the community. Whether you're a developer, designer, or simply passionate about automata theory, your contributions are valuable!
-
-## License
-
-This project is licensed under the MIT License. For details, see the [LICENSE](LICENSE) file.
+Whether you're a computer science student studying automata theory, an educator teaching formal languages, or a software engineer, RegeX provides real-time conversion, interactive step-by-step string simulation, and mathematical inspection.
 
 ---
 
-**Explore the world of regular expressions and automata with Regex2FA! Visit [https://regex2fa.netlify.app/](https://regex2fa.netlify.app/) today.**
+## ⚡ Key Features
+
+- **Automata Representations**:
+  - **NFA (Nondeterministic Finite Automaton)**: Thompson's construction with \(\lambda\)-transitions.
+  - **DFA (Deterministic Finite Automaton)**: Powerset / subset construction with deterministic transitions.
+  - **Mini NFA (Minimized / \(\epsilon\)-Free NFA)**: Compact non-deterministic machine with \(\lambda\)-transitions eliminated and unreachable states pruned.
+
+- **UI Step-by-Step String Simulation**:
+  - **Interactive Tape Visualizer**: Input string tape with an active read-head pointer (\(\blacktriangledown\)) tracking character processing.
+  - **Playback Controls**: Step Forward, Step Backward, Play / Pause with speed toggles (`0.5x`, `1x`, `2x`), Reset, and Jump to End.
+  - **Live Graph Illumination**: Active machine states glow dynamically on the network graph during each step of the simulation.
+  - **Rewindable Execution Trace**: Step-by-step event log where clicking any prior step rewinds the simulator to that exact state.
+  - **Acceptance Verdicts**: Instant `ACCEPTED ✓` or `REJECTED ✗` feedback.
+
+- **Formal 5-Tuple & Transition Matrix (\(\delta\))**:
+  - Full mathematical formal definition: \(M = (Q, \Sigma, \delta, q_0, F)\).
+  - Live-highlighted state-by-symbol transition table.
+
+- **Batch Test Bench**:
+  - Test multiple candidate strings simultaneously against the current automaton.
+
+- **Language Equivalence Checker**:
+  - Side-by-side formal verification checking if two regular expressions describe the identical language (\(L(R_1) == L(R_2)\)).
+
+- **Theory Guide & Syntax Reference**:
+  - Comprehensive guide covering Thompson's construction, Powerset construction, and Mini NFA \(\lambda\)-elimination.
+  - Cheat sheet modal for union (`+` or `|`), concatenation, Kleene star (`*`), and empty string (\(\lambda\) / \(\epsilon\)).
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- `npm`
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/parthsbuddy-sys/RegeX.git
+cd RegeX
+
+# Install dependencies
+npm install
+```
+
+### Running Locally
+
+```bash
+# Start Vite development server
+npm run dev
+```
+
+Open your browser at `http://localhost:5173/` (or the port specified by Vite).
+
+### Production Build
+
+```bash
+# Build production bundle
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: [Vue 3](https://vuejs.org/) + [Vite](https://vitejs.dev/)
+- **Graph Visualization**: [vis-network](https://visjs.github.io/vis-network/docs/network/)
+- **State Management**: [Pinia](https://pinia.vuejs.org/)
+- **Routing**: [Vue Router](https://router.vuejs.org/)
+- **Styling**: Vanilla SCSS + Modern Dark Slate Theme tokens
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
